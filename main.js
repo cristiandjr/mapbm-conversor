@@ -102,23 +102,24 @@ function generateSQLQueries() {
 
   for (const sqlQuery of sqlQueries) {
     if (sqlQuery.trim() !== "") {
-      const processedQuery = generateSQLQuery(sqlQuery.trim());
-      result += processedQuery + (processedQuery.endsWith(";") ? "" : ";") + "\n"; 
+      result += generateSQLQuery(sqlQuery.trim()) + ";\n"; 
     }
   }
 
   const sqlResultTextarea = document.createElement("textarea");
   sqlResultTextarea.rows = "10";
-  sqlResultTextarea.cols = "150";
+  sqlResultTextarea.cols = "50";
   sqlResultTextarea.value = result;
+
 
   sqlQueriesTextarea.replaceWith(sqlResultTextarea);
 }
 
 function generateSQLQuery(sqlQuery) {
-  const ID = "SEQ_esb_map.NextVal"; // Valor para ID
   const currentDate = new Date().toLocaleDateString("en-GB"); 
+  const ID = "SEQ_esb_map.NextVal"; 
 
-  return sqlQuery.replace(/'SEQ_esb_map\.NextVal'/g, ID)
-                .replace(/to_date\('\d+\/\d+\/\d+'\,'DD\/MM\/RRRR'\)/g, `to_date('${currentDate}','DD/MM/RRRR')`);
+
+  return sqlQuery.replace(/to_date\('\d+\/\d+\/\d+'\,'DD\/MM\/RRRR'\)/g, `to_date('${currentDate}','DD/MM/RRRR')`)
+                 .replace(/'\d+'(?=\s*,)/g, ID); 
 }
