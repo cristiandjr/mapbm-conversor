@@ -109,7 +109,7 @@ function generateSQLQueries() {
 
   const sqlResultTextarea = document.createElement("textarea");
   sqlResultTextarea.rows = "10";
-  sqlResultTextarea.cols = "50";
+  sqlResultTextarea.cols = "150";
   sqlResultTextarea.value = result;
 
   sqlQueriesTextarea.replaceWith(sqlResultTextarea);
