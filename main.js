@@ -1,9 +1,11 @@
 const resultado = document.getElementById("resultado");
 const formulario = document.getElementById("formulario");
 
+
+
   // comillas dobles
   // mapBm:getValue("GENERAL", "TOA", "company", "defaultCompany", "AMDOCS")
-  // mapBm:getValueWithDefault("AVERIAS", "CRM", "PRIORITY", $sourceBPT, "TOA", "")
+  // mapBm:getValueWithDefault("AVERIAS", "CRM", "PRIORITY", $sourceBPT, "TOA", "0")
 
   // comillas simples
   // mapBm:getValue('GENERAL', 'TOA', 'company', 'defaultCompany', 'AMDOCS')
@@ -41,9 +43,9 @@ formulario.addEventListener("submit", (e) => {
 
   const fechaFormateada = `${dia}/${mes}/${anio}`;
 
-
+  resultado.innerHTML = ''
   
-  resultado.innerHTML = `
+  resultado.innerHTML += `
     <div class="resultado">
       <div>
         <h2>Resultado para Request:</h2>
@@ -76,3 +78,47 @@ formulario.addEventListener("submit", (e) => {
 
 
 // select * from ESB_MAP where group_map='${values[0]}' and source_system='${values[1]}' and source_attr='${values[2]}' and source_value='${values[3]}' and target_system='${values[4]}' and target_attr='${values[3]}'; 
+
+
+// el select es igual y el request tmb
+//  <amd:source_system>AMDOCS</amd:source_system>
+//  <amd:source_attr>toa_priority</amd:source_attr>
+//  <amd:target_system>TOA</amd:target_system>
+//  <amd:source_value>string</amd:source_value>
+//  <amd:group>GENERAL</amd:group>
+//  <amd:defaultValue>9</amd:defaultValue>
+
+
+// ====================================================== DBA Conversor
+
+
+
+
+function generateSQLQueries() {
+  const sqlQueriesTextarea = document.getElementById("sqlQueries");
+  const sqlQueries = sqlQueriesTextarea.value.split(";"); 
+
+  let result = "";
+
+  for (const sqlQuery of sqlQueries) {
+    if (sqlQuery.trim() !== "") {
+      const processedQuery = generateSQLQuery(sqlQuery.trim());
+      result += processedQuery + (processedQuery.endsWith(";") ? "" : ";") + "\n"; 
+    }
+  }
+
+  const sqlResultTextarea = document.createElement("textarea");
+  sqlResultTextarea.rows = "10";
+  sqlResultTextarea.cols = "50";
+  sqlResultTextarea.value = result;
+
+  sqlQueriesTextarea.replaceWith(sqlResultTextarea);
+}
+
+function generateSQLQuery(sqlQuery) {
+  const ID = "SEQ_esb_map.NextVal"; // Valor para ID
+  const currentDate = new Date().toLocaleDateString("en-GB"); 
+
+  return sqlQuery.replace(/'SEQ_esb_map\.NextVal'/g, ID)
+                .replace(/to_date\('\d+\/\d+\/\d+'\,'DD\/MM\/RRRR'\)/g, `to_date('${currentDate}','DD/MM/RRRR')`);
+}
