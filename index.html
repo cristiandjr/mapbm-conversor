@@ -7,29 +7,27 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>mapBm Conversor</h1>
+    <h1>Conversores prueba 0.1.0</h1>
 
-    <form id="formulario">
-      <fieldset>
-        <legend>Formulario</legend>
-        <textarea name="mapBm" id="mapBm" cols="100" rows="10"></textarea>
-        <br/>
-        <button type="submit">Generar</button> 
-      </fieldset>
-    </form>
+    <main class="container">
+      <section>
+        <h2>mapBm Conversor</h2>
+        <form id="formulario">
+          <textarea name="mapBm" id="mapBm" cols="100" rows="10"></textarea>
+          <br />
+          <button type="submit">Generar</button>
+        </form>
+        <div id="resultado"></div>
+      </section>
 
-    <div id="resultado"></div>
-
-    <br />
-    <hr />
-    <br />
-
-    <h1>DBA Conversor prueba 0.1.0</h1>
-
-    <textarea id="sqlQueries" rows="10" cols="150"></textarea>
-    <br>
-    <button onclick="generateSQLQueries()">Generar Consultas</button>
-  
+      <section>
+        <h2>DBA Conversor</h2>
+        <textarea id="sqlQueries" rows="10" cols="100"></textarea>
+        <br />
+        <button onclick="generateSQLQueries()">Generar</button>
+        <div id="resultado"></div>
+      </section>
+    </main>
 
     <script src="main.js"></script>
   </body>
